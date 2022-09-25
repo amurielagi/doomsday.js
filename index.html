@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script type="module" src="dd.js"></script>
+        <style>
+            #frontCanvas {
+                cursor: crosshair;
+                z-index: 1;
+                position: absolute;
+                left: 2em;
+            }
+            #midCanvas {
+                z-index: 0;
+                position: absolute;
+                left: 2em;
+            }
+            #backCanvas {
+                z-index: -1;
+                position: absolute;
+                left: 2em;
+            }
+        </style>
+        <link rel="icon" type="image/gif" href="./gfx/title/day4.gif">
+    </head>
+    <body>
+        <h1>Doomsday.js</h1>
+        <canvas id="backCanvas" width="450" height="370"></canvas>
+        <canvas id="midCanvas" width="450" height="370"></canvas>
+        <canvas id="frontCanvas" width="450" height="370"></canvas>
+    </body>
+</html>
