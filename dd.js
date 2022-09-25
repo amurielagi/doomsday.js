@@ -106,9 +106,13 @@ class Game {
                 setTimeout(() => this.loadNextCity(), 0);
             },
             e => {
-                this.showMain();
+                this.gameOver().then(() => this.showMain());
             }
         );
+    }
+
+    gameOver() {
+        return Promise.resolve();
     }
 
     advanceToNextCity() {

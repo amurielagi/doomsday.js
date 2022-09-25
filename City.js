@@ -63,7 +63,8 @@ export default class City extends GameScreen {
     }
 
     stageLoop() {
-        return new Stage(this.ctx, this).start();
+        this.stage = new Stage(this.ctx, this);
+        return this.stage.start();
     }
 
     screenLoop() {
@@ -81,6 +82,7 @@ export default class City extends GameScreen {
             const sectionEnd = sectionStart + image.naturalWidth;
             if (x >= sectionStart && x < sectionEnd ) {
                 this.showRuins(i);
+                this.stage.setCitySectionDestroyed(i);
                 return;
             }
             sectionStart = sectionEnd;

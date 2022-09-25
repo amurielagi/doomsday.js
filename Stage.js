@@ -21,6 +21,7 @@ export default class Stage {
         this.explosions = [];
         this.finished = false;
         this.lostTime = 0;
+        this.citySectionDestroyed = [false, false, false, false, false];
     }
 
     objectsAtLevel(level) {
@@ -71,6 +72,10 @@ export default class Stage {
         }
     }
 
+    setCitySectionDestroyed(index) {
+        this.citySectionDestroyed[index] = true;
+    }
+
     start() {
         document.addEventListener('visibilitychange', e => {
             if(document.hidden) {
@@ -82,7 +87,7 @@ export default class Stage {
             }
         });
 
-        return new Promise(accept => {
+        return new Promise((accept, reject) => {
             const sub = this.ctx.addKeyDownListener(e => {
                 if (e.keyCode === 13) {
                     sub.dispose();
@@ -101,6 +106,12 @@ export default class Stage {
                         level.forEach(o => o.frame(ts));
                     }
                 });
+                if (this.objectFactory.finished) {
+                    this.finished = true;
+                }
+                if (this.citySectionDestroyed.indexOf(false) === -1) {
+                    reject();
+                }
                 requestAnimationFrame(this._nextFrame);
             };
             requestAnimationFrame(this._nextFrame);
