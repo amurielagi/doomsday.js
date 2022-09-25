@@ -19,9 +19,9 @@ export default class Stage {
         this.sats = null;
         this.rockets = null;
         this.explosions = [];
-        this.finished = false;
         this.lostTime = 0;
         this.citySectionDestroyed = [false, false, false, false, false];
+        this.explosionsObservers = [];
     }
 
     objectsAtLevel(level) {
@@ -43,14 +43,26 @@ export default class Stage {
         };
     }
 
+    addExplosionObserver(o) {
+        this.explosionsObservers.push(o);
+        setTimeout(() => this.explosionsObservers.forEach(o => o(this.explosions)), 0);
+        return {
+            dispose: () => {
+                this.explosionsObservers = this.explosionsObservers.filter(i => i !== o);
+            }
+        };
+    }
+
     addExplosion(target) {
         const explosion = new Explosion(this.ctx, this, target);
         this.explosions.push(explosion);
+        this.explosionsObservers.forEach(o => o(this.explosions));
         explosion.start();
     }
 
     removeExplosion(explosion) {
         this.explosions = this.explosions.filter(e => e !== explosion);
+        this.explosionsObservers.forEach(o => o(this.explosions));
     }
 
     explosionWithin(t) {
@@ -88,18 +100,10 @@ export default class Stage {
         });
 
         return new Promise((accept, reject) => {
-            const sub = this.ctx.addKeyDownListener(e => {
-                if (e.keyCode === 13) {
-                    sub.dispose();
-                    this.finished = true;
-                }
-            });
+            var continueLoop = true;
+            var factoryFinishedObserver = null;
             this._nextFrame = ts => {
                 this.ctx.front.clear();
-                if (this.finished) {
-                    accept();
-                    return;
-                }
                 ts -= this.lostTime;
                 this.objects.forEach(level => {
                     if (level) {
@@ -107,13 +111,31 @@ export default class Stage {
                     }
                 });
                 if (this.objectFactory.finished) {
-                    this.finished = true;
+                    if (!factoryFinishedObserver) {
+                        var sub = null;
+                        factoryFinishedObserver = explosions => {
+                            if (explosions.length === 0) {
+                                continueLoop = false;
+                                sub.dispose();
+                                accept();
+                            }
+                        };
+                        sub = this.addExplosionObserver(factoryFinishedObserver);
+                    }
                 }
                 if (this.citySectionDestroyed.indexOf(false) === -1) {
-                    this.disposeAll();
-                    reject();
+                    if (!this.gameOver) {
+                        this.gameOver = true;
+                        setTimeout(() => {
+                            continueLoop = false;
+                            this.disposeAll();
+                            reject();
+                        }, 2000);
+                    }
                 }
-                requestAnimationFrame(this._nextFrame);
+                if (continueLoop) {
+                    requestAnimationFrame(this._nextFrame);
+                }
             };
             requestAnimationFrame(this._nextFrame);
         }).then(() => {
