@@ -110,14 +110,24 @@ export default class Stage {
                     this.finished = true;
                 }
                 if (this.citySectionDestroyed.indexOf(false) === -1) {
+                    this.disposeAll();
                     reject();
                 }
                 requestAnimationFrame(this._nextFrame);
             };
             requestAnimationFrame(this._nextFrame);
         }).then(() => {
-            this.cannonLeft.dispose();
-            this.cannonRight.dispose();
+            this.disposeAll();
+        });
+    }
+
+    disposeAll() {
+        this.cannonLeft.dispose();
+        this.cannonRight.dispose();
+        this.objects.forEach(level => {
+            if (level) {
+                level.forEach(o => o.dispose());
+            }
         });
     }
 }
