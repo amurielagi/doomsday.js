@@ -1,4 +1,4 @@
-import Magazine from "./Magazine";
+import Magazine from "./Magazine.js";
 
 export default class GameSession {
     constructor() {

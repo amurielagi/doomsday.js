@@ -22,7 +22,7 @@ X explosion debris
 - plane destroyed animation
 X falling sat
 X falling sat-explosion collision
-X falling sat destroyed animation
+- falling sat destroyed animation
 - rogue sat
 - rogue sat-explosion collision
 - rogue sat destroyed animation
@@ -42,7 +42,7 @@ X rocket explosion
 - city intro
 - city saved outro
   - report stats
-  - add earned ammo
+  X add earned ammo
   - add earned SDI
 X city-city transition
 - game over outro
