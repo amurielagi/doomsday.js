@@ -144,7 +144,7 @@ export default class Stage {
     }
 
     disposeAll() {
-        this.ctx.session.lastCitySafePercent = this.citySectionDestroyed.filter(v => !v).length * 20;
+        this.ctx.session.citySafePercent = this.citySectionDestroyed.filter(v => !v).length * 20;
         this.cannonLeft.dispose();
         this.cannonRight.dispose();
         this.objects.forEach(level => {
