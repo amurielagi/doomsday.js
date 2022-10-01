@@ -32,6 +32,7 @@ export default class TitleScreen extends GameScreen {
     screenLoop() {
         return new Promise(accept => {
             const ctx = this.ctx;
+            ctx.session.reset();
             const sub = ctx.addButtonListener(424, 344, 14, 14, {
                 onMouseDown: () => {
                     ctx.sounds.enabled = !ctx.sounds.enabled;

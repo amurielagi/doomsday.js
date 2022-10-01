@@ -1,5 +1,6 @@
 import DrawingContextWrapper from './DrawingContextWrapper.js';
 import Sounds from './Sounds.js';
+import GameSession from './GameSession.js';
 
 function trycall(c) {
     return c && c();
@@ -7,7 +8,7 @@ function trycall(c) {
 
 export default class GameContext {
     constructor() {
-        this.session = {leftAmmo: 50, rightAmmo: 50};
+        this.session = new GameSession();
         this.images = {};
         this.back = new DrawingContextWrapper('backCanvas');
         this.mid = new DrawingContextWrapper('midCanvas');
