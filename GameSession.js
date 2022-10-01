@@ -2,11 +2,11 @@ import Magazine from "./Magazine.js";
 import MagazineView from "./MagazineView.js";
 
 export default class GameSession {
-    constructor() {
+    constructor(ctx) {
         this.leftMagazine = new Magazine();
-        this.leftMagazineView = new MagazineView(this.leftMagazine);
+        this.leftMagazineView = new MagazineView(this.leftMagazine, "left", ctx);
         this.rightMagazine = new Magazine();
-        this.rightMagazineView = new MagazineView(this.rightMagazine);
+        this.rightMagazineView = new MagazineView(this.rightMagazine, "right", ctx);
     }
 
     reset() {

@@ -8,7 +8,6 @@ function trycall(c) {
 
 export default class GameContext {
     constructor() {
-        this.session = new GameSession();
         this.images = {};
         this.back = new DrawingContextWrapper('backCanvas');
         this.mid = new DrawingContextWrapper('midCanvas');
@@ -18,6 +17,7 @@ export default class GameContext {
         this.mouseDownListeners = [];
         this.mouseMoveListeners = [];
         this.keyDownListeners = [];
+        this.session = new GameSession(this);
         const front = document.getElementById('frontCanvas');
         front.addEventListener('mousedown', e => this._mouseDown(e));
         front.addEventListener('mouseout', e => this._mouseOut(e));
