@@ -7,7 +7,7 @@ export default class Magazine {
     }
     
     reset() {
-        this.ammo = MAX_AMMO / 2;
+        this.ammo = 30;
     }
 
     set count(ammo) {
