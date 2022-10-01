@@ -45,7 +45,7 @@ export default class Stage {
 
     addExplosionObserver(o) {
         this.explosionsObservers.push(o);
-        setTimeout(() => this.explosionsObservers.forEach(o => o(this.explosions)), 0);
+        setTimeout(() => o(this.explosions), 0);
         return {
             dispose: () => {
                 this.explosionsObservers = this.explosionsObservers.filter(i => i !== o);
@@ -144,6 +144,12 @@ export default class Stage {
     }
 
     disposeAll() {
+        this.ctx.session.lastCitySafePercent = this.citySectionDestroyed.filter(v => !v).length * 20;
+        let ammo = this.cannonLeft.ammo + this.cannonRight.ammo + this.ctx.session.lastCitySafePercent;
+        ammo = Math.min(ammo, 200);
+        this.ctx.session.leftAmmo = Math.floor(ammo / 2);
+        this.ctx.session.rightAmmo = ammo - this.ctx.session.leftAmmo;
+
         this.cannonLeft.dispose();
         this.cannonRight.dispose();
         this.objects.forEach(level => {
