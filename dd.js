@@ -34,7 +34,7 @@ X shoot rocket
 X rocket wake
 X temp rocket crosshair
 X rocket explosion
-- report remaining ammo
+X report remaining ammo
 - report SDI
 - shoot SDI click
 - shoot SDI spacebar
