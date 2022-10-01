@@ -16,7 +16,7 @@ export default class GameSession {
 
     set citySafePercent(value) {
         this.lastCitySafePercent = value;
-        let ammo = this.leftMagazine.count + this.rightMagazine.count + value;
+        let ammo = this.leftMagazine.count + this.rightMagazine.count + value / 4;
         this.leftMagazine.count = ammo / 2;
         this.rightMagazine.count = ammo - this.leftMagazine.count
     }

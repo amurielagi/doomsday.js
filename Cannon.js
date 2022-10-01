@@ -20,6 +20,7 @@ export default class Cannon extends StageObject {
     }
 
     destroy() {
+        while(this.magazine.pop());
         this.dispose();
         this.ctx.mid.clearRect(this.left ? 0 : 424, 307, 26, 26);
     }
