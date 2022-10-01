@@ -19,7 +19,9 @@ export default class Loading {
                 return this.next.show(this.ctx);
             })
             .catch(e => {
-                console.error(e);
+                if (e) {
+                    console.error(e);
+                }
                 return Promise.reject(e);
             });
     }

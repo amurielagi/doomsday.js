@@ -1,14 +1,17 @@
+export const MAX_AMMO = 80;
+
 export default class Magazine {
     constructor() {
         this.reset();
+        this.observers = [];
     }
     
     reset() {
-        this.ammo = 50;
+        this.ammo = MAX_AMMO / 2;
     }
 
     set count(ammo) {
-        this.ammo = ammo;
+        this.ammo = Math.min(Math.max(0, Math.floor(ammo)), MAX_AMMO);
     }
 
     get count() {
@@ -18,8 +21,19 @@ export default class Magazine {
     pop() {
         if (this.ammo > 0) {
             this.ammo--;
+            this.observers.forEach(o => o());
             return true;
         }
         return false;
+    }
+
+    addChangeObserver(o) {
+        this.observers.push(o);
+        return {
+            dispose: () => {
+                this.observers = this.observers.filter(l => l !== o);
+            }
+        };
+
     }
 };

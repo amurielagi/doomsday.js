@@ -41,11 +41,13 @@ export default class City extends GameScreen {
         this.ctx.back.drawImage(this.images[5].image, 0, 0);
         this.ctx.back.drawImage(this.ctx.images.gun_left2, 0, 307);
         this.ctx.back.drawImage(this.ctx.images.gun_right2, 424, 307);
+        this.ctx.session.drawMagazineView(this.ctx.back);
     }
 
     intro() {
         this.ctx.mid.drawImage(this.ctx.images.gun_left2, 0, 307);
         this.ctx.mid.drawImage(this.ctx.images.gun_right2, 424, 307);
+        this.ctx.session.drawMagazineView(this.ctx.mid);
         this.ctx.back.drawImage(this.images[5].image, 0, 0);
         return Promise.resolve();
     }
